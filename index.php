@@ -32,18 +32,28 @@ foreach ($all_contents as $item) {
 $breadcrumb = explode(DIRECTORY_SEPARATOR, $cwd);
 $cwd_road = "";
 
+$is_home = false; /* la variable indique si on est arrivé à "home" ou pas*/
+
+echo "<div class='container row'>";
 foreach ($breadcrumb as $name) {
-  echo "<form method='POST'>";
-    echo "<a href='index.php'>";
-      echo "<button type='submit'>";
-      echo $name;
-      echo "</button>";
-    echo "</a>";
-    echo "<input type='text' name='cwd' value='$cwd_road'>";
-  echo "</form>";
   $cwd_road .= $name . DIRECTORY_SEPARATOR; // ou $cwd_road = $cwd_road.$name . DIRECTORY_SEPARATOR; car .= est un opérateur concaténant
-  echo $cwd_road."<br>";
+  if ($name === "$home") {
+    $is_home = true; /* Quand on arrive à "home" alors "true" ... */
+  }
+  if ($is_home) { /*...et si on est passé après "home" on affiche les boutons*/
+    echo "<div class='d-flex'>";
+    echo "<form method='POST'>";
+      echo "<a href='index.php'>";
+        echo "<button type='submit'>";
+        echo $name;
+        echo "</button>";
+      echo "</a>";
+      echo "<input type='hidden' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
+    echo "</form>";
+    echo "</div>";
+  }
 }
+    echo "</div>";
 
 
 
