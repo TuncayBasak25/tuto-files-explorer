@@ -1,1 +1,1 @@
-# tuto-files-explorer
+# Tutoriel: Explorateur de fichiers en PHP
