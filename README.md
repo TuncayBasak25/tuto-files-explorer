@@ -110,9 +110,13 @@ Dans le 1er chargement de la page, la variable <code>$\_POST($cwd)</code> n'exis
 
 ## 5 - Pouvoir se promener dans l'arborescence : ouvrir des dossiers enfants, remonter au parent, etc.) :
 
+En reprenant le code de l'affichage du fil d'ariane et en l'adaptant, on obtient l'affichage du contenu :
 
+  <code>echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";</code>
 
+Ceci permet d'obtenir le chemin des répertoires dans le dossier actuel.
 
+Précision : on réutilise le formulaire en utilisant l'attribut <code>form='changecwd'</code> pour pointer le formulaire auquel on a donné l'<code>id='changecwd'</code>.
 
 
 ## 6 - Trier les fichiers par nom / taille / type / date de création :
