@@ -21,7 +21,6 @@ $all_contents = scandir($cwd);
 // print_r($all_contents);
 
 $contents = [];
-
 $contents_size = [];
 $contents_date = [];
 $contents_type = [];
@@ -38,13 +37,9 @@ foreach ($all_contents as $item) {
     }
     else {
       $contents_size[$item] = filesize($cwd . DIRECTORY_SEPARATOR . $item);
-      if ($item[0] === "." && strpos(substr($item, 1), ".")) {
-        $type = explode(".", substr($item, 1));
-        $contents_type[$item] = $type[1];
-      }
-      elseif (strpos($item, ".")) {
+      if (strpos($item, ".")) {
         $type = explode(".", $item);
-        $contents_type[$item] = $type[1];
+        $contents_type[$item] = end($type);
       }
       else {
         $contents_type[$item] = "undefined";
@@ -52,7 +47,6 @@ foreach ($all_contents as $item) {
     }
     }
   }
-
 
 $breadcrumb = explode(DIRECTORY_SEPARATOR, $cwd);
 $cwd_road = "";
@@ -76,20 +70,48 @@ foreach ($breadcrumb as $name) {
   }
 }
 echo "</div>";
-echo "<div>";
-foreach ($contents as $name) {
-  echo "<div class='d-flex'>";
-      echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
-      echo $name;
+
+echo "<div class='container'>";
+  echo "<div class='breadcrumb'>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='changecwd' name='sort' value=''>";
+      echo "Name";
       echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='changecwd' name='sort' value=''>";
+      echo "Date";
+      echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='changecwd' name='sort' value=''>";
+      echo "Size";
+      echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='changecwd' name='sort' value=''>";
+      echo "Type";
+      echo "</button>";
+    echo "</div>";
+  echo "</div>";
+foreach ($contents as $name) {
+  echo "<div class='breadcrumb'>";
+    echo "<div class='w-25'>";
+        echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+        echo $name;
+        echo "</button>";
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo date("d-m-Y à H:i:s", $contents_date[$name]);
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_size[$name];
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_type[$name];
+      echo "</div>";
   echo "</div>";
 }
 echo "</div>";
-
-
-
-
-
-
 
 include "footer.php";

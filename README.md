@@ -119,11 +119,66 @@ Ceci permet d'obtenir le chemin des répertoires dans le dossier actuel.
 Précision : on réutilise le formulaire en utilisant l'attribut <code>form='changecwd'</code> pour pointer le formulaire auquel on a donné l'<code>id='changecwd'</code>.
 
 
-## 6 - Trier les fichiers par nom / taille / type / date de création :
+## 6 - Récupérer les nom / taille / type / date de création de chaque élément :
+
+On commence par créer 3 variables qui vont contenir 3 tableaux : la date, la taille et le type.
+
+  <code>
+  $contents_size = [];
+  $contents_date = [];
+  $contents_type = [];
+  </code>
+
+Ensuite, dans le <ode>foreach</code>, dans la condition qui vérifie que le contenu des variables <code$item</code> n'est ni "." ni "..", on va créer une variable sous forme de tableau pour récupérer les noms des items :
+
+  <code>
+  $contents[$item] = $item;
+  </code>
+
+Puis, on créé une deuxième variable qui va contenir un tableau pour récupérer la date des items :
+
+  <code>
+  $contents_date[$item] = filemtime($cwd . DIRECTORY_SEPARATOR . $item);
+  </code>
+
+On va récupérer les "size" et les "type", en distinguant les fichiers des dossiers. On créé une condition qui vérifie si l'item est un "dossier" :
+
+  <code>
+  if (is_dir($cwd . DIRECTORY_SEPARATOR . $item)) {
+    $contents_size[$item] = "";
+    $contents_type[$item] = "Folder";
+  }</code>
+
+Si c'est un dossier, on ne calcule pas sa taille et on lui attribut le type "dossier".
+Si ce n'est pas un dossier alors c'est un fichier ! :-D
+On utilise la fonction <code>filesize()</code> en lui passant en paramètre le chemin de l'item :
+
+  <code>
+  $contents_size[$item] = filesize($cwd . DIRECTORY_SEPARATOR . $item);
+  </code>
+
+On utilise la fonction <code>strpos()</code> dans une condition, cette fonction vérifie la présence d'un caractère et retourne sa position. En l'occurence, dans ce cas, on va vérifier la présence d'un "." dans le nom du fichier :
+
+  <code>
+  if (strpos($item, ".")) {
+    $type = explode(".", $item);
+    $contents_type[$item] = end($type);
+  }</code>
+
+S'il y a un ".", on déclare une variable <code>$type</code> qui contient le résultat de la fonction <code>explode()</code> à laquelle on passe en paramètre le caractère "." suivi de l'occurence de la variable de <code>$item</code>.
+Enfin, dans la variable <code>$contents_type[$item]</code>, on récupére le dernier éléments du tableau grace à la fonction <code>end($type)</code> qui nous donne l'extension du fichier.
+'il n'y a pas de ".", l'extension étant non définie, on indique "undefined".
+
+  <code>
+  else {
+    $contents_type[$item] = "undefined";
+  }</code>
 
 
-## 7 - Bouton pour classer les fichiers par nom / taille / type / date de création :
+## 7 - pour chaque élément, afficher et trier par nom / taille / type / date de création :
 
+<code>
+</code>
 
 ## 8 - Option afficher/masquer les fichiers cachés :
 
