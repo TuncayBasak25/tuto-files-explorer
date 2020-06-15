@@ -74,10 +74,10 @@ On déclare une variable <code>$breadcrumb</code> qui va contenir la fonction <c
 
 Ensuite, on fait apparaître chaque élément du tableau dans une boucle <code>foreach</code> pour révéler l'arborescence :
 
-<code>
-  foreach ($breadcrumb as $name) {
-  echo "<button>$name</button>";
-  }</code>
+  <code>
+    foreach ($breadcrumb as $name) {
+    echo "<button>$name</button>";
+    }</code>
 
 On utilise un formulaire afin d'envoyer la valeur modifiée de la variable <code>$cwd</code> pour la récupérer avec la variable super-globale <code>$\_POST()</code> à chaque changement de répertoire.
 
@@ -105,7 +105,7 @@ Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après l
     $cwd = $\_POST["cwd"];
   }</code>
 
-Dans le 1er chargement de la page, la variable <code>$\_POST($cwd)</code> n'existe pas. Avec la fonction <code>isset()</code>, on teste si cette variable existe, à défaut, la variable <code>$cwd</code> prend la valeur de <code>getcwd() . DIRECTORY_SEPARATOR . $home</code>
+Dans le 1er chargement de la page, la variable <code>$\_POST($cwd)</code> n'existe pas. Avec la fonction <code>isset()</code>, on teste si cette variable existe, à défaut, la variable <code>$cwd</code> prend la valeur de <code>getcwd() . DIRECTORY_SEPARATOR . $home</code>.
 
 
 ## 5 - Pouvoir se promener dans l'arborescence : ouvrir des dossiers enfants, remonter au parent, etc.) :
