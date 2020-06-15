@@ -74,11 +74,11 @@ On déclare une variable <code>$breadcrumb</code> qui va contenir la fonction <c
 
 Ensuite, on fait apparaître chaque élément du tableau dans une boucle <code>foreach()</code> pour révéler l'arborescence :
 
-  <code>
-    foreach($breadcrumb as $name) {
-    echo '<button>'.$name.'</button>';
-    }
-  </code>
+  ```
+  foreach($breadcrumb as $name) {
+  echo '<button>'.$name.'</button>';
+  }
+  ```
 
 On utilise un formulaire afin d'envoyer la valeur modifiée de la variable <code>$cwd</code> pour la récupérer avec la variable super-globale <code>$\_POST()</code> à chaque changement de répertoire.
 
