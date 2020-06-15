@@ -208,7 +208,7 @@ Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier é
   ```
 
 
-## 7 - pour chaque élément, afficher et trier par nom / taille / type / date de création :
+## 7 - Pour chaque élément, afficher et trier par nom / taille / type / date de création :
 
 
 
