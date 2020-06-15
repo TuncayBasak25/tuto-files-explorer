@@ -72,11 +72,11 @@ On déclare une variable <code>$breadcrumb</code> qui va contenir la fonction <c
 
   <code>$breadcrumb = explode(DIRECTORY_SEPARATOR, $cwd);</code>
 
-Ensuite, on fait apparaître chaque élément du tableau dans une boucle <code>foreach</code> pour révéler l'arborescence :
+Ensuite, on fait apparaître chaque élément du tableau dans une boucle <code>foreach()</code> pour révéler l'arborescence :
 
   <code>
-    foreach ($breadcrumb as $name) {
-    echo "<button>$name</button>";
+    foreach($breadcrumb as $name) {
+    echo \"<button>$name</button>\";
     }</code>
 
 On utilise un formulaire afin d'envoyer la valeur modifiée de la variable <code>$cwd</code> pour la récupérer avec la variable super-globale <code>$\_POST()</code> à chaque changement de répertoire.
@@ -91,7 +91,7 @@ Afin de parcourir le fil d'ariane, on transforme chaque portion en un bouton ave
       echo "</button>";
     echo "</a>";
     echo "<input type='hidden' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
-  echo "</form>"; </code>
+  echo "</form>";</code>
 
 Précision : le <code>substr($cwd_road, 0, -1</code> permet de retirer le "DIRECTORY_SEPARATOR" en trop à la fin.
 
