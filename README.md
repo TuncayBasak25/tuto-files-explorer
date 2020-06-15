@@ -99,17 +99,21 @@ Ensuite, on fait apparaître chaque élément du tableau dans une boucle ```fore
 
 On utilise un formulaire afin d'envoyer la valeur modifiée de la variable ```$cwd``` pour la récupérer avec la variable super-globale ```$_POST()``` à chaque changement de répertoire.
 
-Afin de parcourir le fil d'ariane, on transforme chaque portion en un bouton avec un lien grace au formulaire :
+Afin de parcourir le fil d'ariane, on transforme chaque portion en un bouton avec un lien grace au formulaire.
+On commence par déclarer une variable ```$cwd_road = "";``` qui sert à enregistrer le chemin qui mène aux dossiers que l'on parcour dans le fil d'ariane, cette varaible se contruit au fur et à mesure où l'on navigue dans les dossiers enfants. Ensuite, dans le ```foreach()```:
 
   ```
-  echo "<form method='POST'>";
-    echo "<a href='index.php'>";
-      echo "<button type='submit'>";
-      echo $name;
-      echo "</button>";
-    echo "</a>";
-    echo "<input type='hidden' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
-  echo "</form>";
+  foreach ($breadcrumb as $name) {
+    $cwd_road .= $name . DIRECTORY_SEPARATOR;
+      echo "<form method='POST'>";
+        echo "<a href='index.php'>";
+          echo "<button type='submit'>";
+          echo $name;
+          echo "</button>";
+        echo "</a>";
+        echo "<input type='hidden' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
+      echo "</form>";
+  }
   ```
 
 Précision : le ```substr($cwd_road, 0, -1``` permet de retirer le "DIRECTORY_SEPARATOR" en trop à la fin.

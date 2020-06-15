@@ -54,6 +54,7 @@ $cwd_road = "";
 $is_home = false; /* la variable indique si on est arrivé à "home" ou pas*/
 
 echo "<form id='changecwd' method='POST'></form>";
+echo "<form id='sort' method='POST'></form>";
 
 echo "<div class='container row'>";
 foreach ($breadcrumb as $name) {
@@ -74,7 +75,7 @@ echo "</div>";
 echo "<div class='container'>";
   echo "<div class='breadcrumb'>";
     echo "<div class='w-25'>";
-      echo "<button type='submit' form='changecwd' name='sort' value=''>";
+      echo "<button type='submit' form='sort' name='sort' value=''>";
       echo "Name";
       echo "</button>";
     echo "</div>";
