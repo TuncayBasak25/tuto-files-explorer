@@ -119,6 +119,8 @@ On commence par déclarer une variable ```$cwd_road = "";``` qui sert à enregis
 Précision : le ```substr($cwd_road, 0, -1``` permet de retirer le "DIRECTORY_SEPARATOR" en trop à la fin.
 
 Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après le rafraichissement de la page via la variable ```$_POST($cwd)```.
+On vérifie qu'il y a quelque chose dans ```$_POST["cwd"]``` en mettant le code suivant en début de fichier, après la déclaration de la variable ```$home```.
+
 
   ```
   if (!isset($_POST["cwd"])) {
@@ -128,6 +130,8 @@ Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après l
     $cwd = $_POST["cwd"];
   }
   ```
+
+On fait ensuite un ```echo "<form id='changecwd' method='POST'></form>";``` que l'on place avant le ```foreach()```.
 
 Dans le 1er chargement de la page, la variable ```$_POST($cwd)``` n'existe pas. Avec la fonction ```isset()```, on teste si cette variable existe, à défaut, la variable ```$cwd``` prend la valeur de ```getcwd() . DIRECTORY_SEPARATOR . $home```.
 
