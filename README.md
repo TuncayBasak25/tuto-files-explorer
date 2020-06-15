@@ -76,8 +76,9 @@ Ensuite, on fait apparaître chaque élément du tableau dans une boucle <code>f
 
   <code>
     foreach($breadcrumb as $name) {
-    echo \"<button>$name</button>\";
-    }</code>
+    echo '<button>'.$name.'</button>';
+    }
+  </code>
 
 On utilise un formulaire afin d'envoyer la valeur modifiée de la variable <code>$cwd</code> pour la récupérer avec la variable super-globale <code>$\_POST()</code> à chaque changement de répertoire.
 
