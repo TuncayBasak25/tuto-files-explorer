@@ -97,7 +97,7 @@ Ensuite, on fait apparaître chaque élément du tableau dans une boucle ```fore
   }
   ```
 
-On utilise un formulaire afin d'envoyer la valeur modifiée de la variable ```$cwd``` pour la récupérer avec la variable super-globale ```$\_POST()``` à chaque changement de répertoire.
+On utilise un formulaire afin d'envoyer la valeur modifiée de la variable ```$cwd``` pour la récupérer avec la variable super-globale ```$_POST()``` à chaque changement de répertoire.
 
 Afin de parcourir le fil d'ariane, on transforme chaque portion en un bouton avec un lien grace au formulaire :
 
@@ -114,18 +114,18 @@ Afin de parcourir le fil d'ariane, on transforme chaque portion en un bouton ave
 
 Précision : le ```substr($cwd_road, 0, -1``` permet de retirer le "DIRECTORY_SEPARATOR" en trop à la fin.
 
-Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après le rafraichissement de la page via la variable ```$\_POST($cwd)```.
+Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après le rafraichissement de la page via la variable ```$_POST($cwd)```.
 
   ```
-  if (!isset($\_POST["cwd"])) {
+  if (!isset($_POST["cwd"])) {
     $cwd = getcwd() . DIRECTORY_SEPARATOR . $home;
   }
   else {
-    $cwd = $\_POST["cwd"];
+    $cwd = $_POST["cwd"];
   }
   ```
 
-Dans le 1er chargement de la page, la variable ```$\_POST($cwd)``` n'existe pas. Avec la fonction ```isset()```, on teste si cette variable existe, à défaut, la variable ```$cwd``` prend la valeur de ```getcwd() . DIRECTORY_SEPARATOR . $home```.
+Dans le 1er chargement de la page, la variable ```$_POST($cwd)``` n'existe pas. Avec la fonction ```isset()```, on teste si cette variable existe, à défaut, la variable ```$cwd``` prend la valeur de ```getcwd() . DIRECTORY_SEPARATOR . $home```.
 
 
 ## 5 - Pouvoir se promener dans l'arborescence : ouvrir des dossiers enfants, remonter au parent, etc.) :
