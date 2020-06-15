@@ -122,22 +122,22 @@ Précision : on réutilise le formulaire en utilisant l'attribut <code>form='cha
 ## 6 - Trier les fichiers par nom / taille / type / date de création :
 
 
-## 8 - Bouton pour classer les fichiers par nom / taille / type / date de création :
+## 7 - Bouton pour classer les fichiers par nom / taille / type / date de création :
 
 
-## 9 - Option afficher/masquer les fichiers cachés :
+## 8 - Option afficher/masquer les fichiers cachés :
 
 
-## 10 - Ouvrir des fichiers :    
+## 9 - Ouvrir des fichiers :    
 
 
-## 11 - Modifier des fichiers :
+## 10 - Modifier des fichiers :
 
 
-## 12 - Couper/copier/coller les fichiers :
+## 11 - Couper/copier/coller les fichiers :
 
 
-## 13 - Supprimer des fichiers :
+## 12 - Supprimer des fichiers :
 
 
 ## 14 - Créer un nouveau dossier dans le répertoire où l'on est positionné :

@@ -22,12 +22,37 @@ $all_contents = scandir($cwd);
 
 $contents = [];
 
+$contents_size = [];
+$contents_date = [];
+$contents_type = [];
+
+
 foreach ($all_contents as $item) {
   if ($item !== "." && $item !== "..") {
     // echo $item ."<br>"; // ou : echo "$item<br>";
     $contents[$item] = $item;
+    $contents_date[$item] = filemtime($cwd . DIRECTORY_SEPARATOR . $item);
+    if (is_dir($cwd . DIRECTORY_SEPARATOR . $item)) {
+      $contents_size[$item] = "";
+      $contents_type[$item] = "Folder";
+    }
+    else {
+      $contents_size[$item] = filesize($cwd . DIRECTORY_SEPARATOR . $item);
+      if ($item[0] === "." && strpos(substr($item, 1), ".")) {
+        $type = explode(".", substr($item, 1));
+        $contents_type[$item] = $type[1];
+      }
+      elseif (strpos($item, ".")) {
+        $type = explode(".", $item);
+        $contents_type[$item] = $type[1];
+      }
+      else {
+        $contents_type[$item] = "undefined";
+      }
+    }
+    }
   }
-}
+
 
 $breadcrumb = explode(DIRECTORY_SEPARATOR, $cwd);
 $cwd_road = "";
@@ -60,6 +85,7 @@ foreach ($contents as $name) {
   echo "</div>";
 }
 echo "</div>";
+
 
 
 
