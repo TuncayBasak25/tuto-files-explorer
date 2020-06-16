@@ -381,10 +381,21 @@ if ($sort_order === "down") {
 }
 
 ```
+Afin de trier notre contenu selon la catégorie voulue, on applique au click sur un bouton l'input qui permet d'inverser le tri du tableau en l'ajoutant au formulaire dont l'```id='sort'``` :
+
+```
+echo "<form id='sort' method='POST'>";
+  echo "<input type='hidden' name='cwd' value='$cwd'>";
+  echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+echo "</form>";
+
+```
+
 
 
 ## 8 - Option afficher/masquer les fichiers cachés :
 
+Par défaut
 
 ## 9 - Ouvrir des fichiers :    
 
