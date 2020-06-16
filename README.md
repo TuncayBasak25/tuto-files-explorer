@@ -213,29 +213,6 @@ S'il n'y a pas de ".", l'extension étant non définie, on indique "undefined" :
     $contents_type[$item] = "undefined";
   }
   ```
-Maintenant, on affiche :
-
-```
-foreach ($sorted_contents as $name => $value) {
-  echo "<div class='breadcrumb'>";
-    echo "<div class='w-25'>";
-        echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
-        echo $name;
-        echo "</button>";
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo date("d-m-Y à H:i:s", $contents_date[$name]);
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo $contents_size[$name];
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo $contents_type[$name];
-      echo "</div>";
-  echo "</div>";
-}
-
-```
 
 
 ## 7 - Pour chaque élément, afficher et trier par nom / taille / type / date de création :
@@ -265,9 +242,32 @@ On créé une barre de catégorie que l'on place au-dessus du contenu de notre e
       echo "</button>";
     echo "</div>";
   echo "</div>";
-
   ```
+
 Précision : les ```class``` Bootstrap (breadcrumb et w-25) ne servent que pour la présentation esthétique.
+
+Maintenant, on affiche :
+
+```
+foreach ($contents as $name => $value) {
+  echo "<div class='breadcrumb'>";
+    echo "<div class='w-25'>";
+        echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+        echo $name;
+        echo "</button>";
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo date("d-m-Y à H:i:s", $contents_date[$name]);
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_size[$name];
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_type[$name];
+      echo "</div>";
+  echo "</div>";
+}
+```
 
 Les boutons correspondent chacun à une catégorie et pointent vers un nouveau formulaire grace à ```form='sort'``` que l'on position suite au formulaire précédent ayant l'```id='changecwd'```.
 
@@ -382,3 +382,6 @@ Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut (xxx
 
 
 ## 19 - Upload de fichier + un système de drag n’drop :
+
+
+--- 2020 / ACS NEVERS ---
