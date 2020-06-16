@@ -162,7 +162,7 @@ On commence par créer 3 variables qui vont contenir 3 tableaux : la date, la ta
   $contents_type = [];
   ```
 
-Ensuite, dans le <ode>foreach```, dans la condition qui vérifie que le contenu des variables <code$item``` n'est ni "." ni "..", on va créer une variable sous forme de tableau pour récupérer les noms des items :
+Ensuite, dans le ```foreach```, dans la condition qui vérifie que le contenu des variables ```$item``` n'est ni "." ni "..", on va créer une variable sous forme de tableau pour récupérer les noms des items :
 
   ```
   $contents[$item] = $item;
@@ -184,24 +184,28 @@ On va récupérer les "size" et les "type", en distinguant les fichiers des doss
   ```
 
 Si c'est un dossier, on ne calcule pas sa taille et on lui attribut le type "dossier".
-Si ce n'est pas un dossier alors c'est un fichier ! :-D
+Si ce n'est pas un dossier, alors c'est un fichier donc on fait le ```else``` de la condition.
+
 On utilise la fonction ```filesize()``` en lui passant en paramètre le chemin de l'item :
 
   ```
+  else {
   $contents_size[$item] = filesize($cwd . DIRECTORY_SEPARATOR . $item);
   ```
 
-On utilise la fonction ```strpos()``` dans une condition, cette fonction vérifie la présence d'un caractère et retourne sa position. En l'occurence, dans ce cas, on va vérifier la présence d'un "." dans le nom du fichier :
+Dans le ```else```, on utilise la fonction ```strpos()``` dans une condition, cette fonction vérifie la présence d'un caractère et retourne sa position. En l'occurence, dans ce cas, on va vérifier la présence d'un "." dans le nom du fichier :
 
   ```
-  if (strpos($item, ".")) {
+  if (strpos(substr($item,1), ".")) {
     $type = explode(".", $item);
     $contents_type[$item] = end($type);
   }
   ```
 
 S'il y a un ".", on déclare une variable ```$type``` qui contient le résultat de la fonction ```explode()``` à laquelle on passe en paramètre le caractère "." suivi de l'occurence de la variable de ```$item```.
-Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier élément du tableau grace à la fonction ```end($type)``` qui nous donne l'extension du fichier.
+
+Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier élément du tableau grace à la fonction ```end($type)``` qui nous donne l'extension du fichier. On ferme ici la condition et on ouvre un nouveau ```else```.
+
 S'il n'y a pas de ".", l'extension étant non définie, on indique "undefined" :
 
   ```
@@ -209,6 +213,29 @@ S'il n'y a pas de ".", l'extension étant non définie, on indique "undefined" :
     $contents_type[$item] = "undefined";
   }
   ```
+Maintenant, on affiche :
+
+```
+foreach ($sorted_contents as $name => $value) {
+  echo "<div class='breadcrumb'>";
+    echo "<div class='w-25'>";
+        echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+        echo $name;
+        echo "</button>";
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo date("d-m-Y à H:i:s", $contents_date[$name]);
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_size[$name];
+      echo "</div>";
+    echo "<div class='w-25'>";
+        echo $contents_type[$name];
+      echo "</div>";
+  echo "</div>";
+}
+
+```
 
 
 ## 7 - Pour chaque élément, afficher et trier par nom / taille / type / date de création :
@@ -242,10 +269,12 @@ On créé une barre de catégorie que l'on place au-dessus du contenu de notre e
   ```
 Précision : les ```class``` Bootstrap (breadcrumb et w-25) ne servent que pour la présentation esthétique.
 
-Les boutons correspondent chacun à une catégorie et pointent vers un nouveau formulaire grace à ```form='sort'``` :
+Les boutons correspondent chacun à une catégorie et pointent vers un nouveau formulaire grace à ```form='sort'``` que l'on position suite au formulaire précédent ayant l'```id='changecwd'```.
 
   ```
-  echo "<form id='sort' method='POST'></form>";
+  echo "<form id='sort' method='POST'>";
+    // On mettra des <input> ici
+  echo "</form>";
 
   ```
 
@@ -259,8 +288,7 @@ On a besoin de garder la valeur de "cwd" (répertoire dans lequel on se trouve) 
 
   ```
 
-Par défaut, on souhaite un tri par ordre alphabétique.
-Donc, on teste si un tri est déjà existant à l'aide de :
+Par défaut, on souhaite un tri par ordre alphabétique donc, on place une vérificiation au début du codeafin de voir si un tri est déjà existant :
 
   ```
   if (!isset($_POST["sort"])) {
@@ -319,6 +347,7 @@ Donc, on teste si un tri est déjà existant.
 
   ```
 
+Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut (xxxxxxxxxxxxxxxxx), alors on inverse la tableau.
 
 
 

@@ -60,7 +60,7 @@ foreach ($all_contents as $item) {
     }
     else {
       $contents_size[$item] = filesize($cwd . DIRECTORY_SEPARATOR . $item);
-      if (strpos($item, ".")) {
+      if (strpos(substr($item,1), ".")) {
         $type = explode(".", $item);
         $contents_type[$item] = end($type);
       }
