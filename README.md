@@ -36,7 +36,7 @@ Maintenant, nous allons afficher, avec la structure de contrôle ```foreach()```
   ```
 
 
-## 2 - Le script ouvre un "enfant" du répertoire dans lequel il se trouve :
+## 2 - Le script créé le répertoire "home" qui sera la racine :
 
 Le script ne doit pas ouvrir le répertoire qui le contient mais un sous-dossier appelé "home".
 On commence donc par vérifier si le dossier "home" existe. S'il n'existe pas, il le créé :
@@ -105,22 +105,18 @@ On commence par déclarer une variable ```$cwd_road = "";``` qui sert à enregis
   ```
   foreach ($breadcrumb as $name) {
     $cwd_road .= $name . DIRECTORY_SEPARATOR;
-      echo "<form method='POST'>";
-        echo "<a href='index.php'>";
-          echo "<button type='submit'>";
-          echo $name;
-          echo "</button>";
-        echo "</a>";
-        echo "<input type='hidden' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
-      echo "</form>";
+      echo "<button type='submit' name='cwd' value='" . substr($cwd_road, 0, -1) . "'>";
+      echo $name;
+      echo "</button>";
   }
   ```
 
 Précision : le ```substr($cwd_road, 0, -1``` permet de retirer le "DIRECTORY_SEPARATOR" en trop à la fin.
 
+On fait ensuite un ```echo "<form id='changecwd' method='POST'></form>";``` que l'on place avant le ```foreach()```.
+
 Grace à ce formulaire, on transmet le nom de notre nouveau répertoire après le rafraichissement de la page via la variable ```$_POST($cwd)```.
 On vérifie qu'il y a quelque chose dans ```$_POST["cwd"]``` en mettant le code suivant en début de fichier, après la déclaration de la variable ```$home```.
-
 
   ```
   if (!isset($_POST["cwd"])) {
@@ -130,8 +126,7 @@ On vérifie qu'il y a quelque chose dans ```$_POST["cwd"]``` en mettant le code 
     $cwd = $_POST["cwd"];
   }
   ```
-
-On fait ensuite un ```echo "<form id='changecwd' method='POST'></form>";``` que l'on place avant le ```foreach()```.
+On va modifier le ```chdir()``` précédemment utilisé qui avait la forme ```chdir(getcwd() . DIRECTORY_SEPARATOR . $home);``` pour ```chdir($cwd)```.
 
 Dans le 1er chargement de la page, la variable ```$_POST($cwd)``` n'existe pas. Avec la fonction ```isset()```, on teste si cette variable existe, à défaut, la variable ```$cwd``` prend la valeur de ```getcwd() . DIRECTORY_SEPARATOR . $home```.
 
