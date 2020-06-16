@@ -24,12 +24,6 @@ else {
 }
 
 
-if (!isset($_POST["last_sort"])) {
-  $_POST["last_sort"] = "name";
-}
-
-
-
 if (!isset($_POST["sort_order"])) {
   $sort_order = "up";
 }
@@ -41,7 +35,18 @@ else {
     $sort_order = "up";
   }
 }
-echo $sort_order;
+
+if (!isset($_POST["show_hidden"])) {
+  $show_hidden = "show";
+}
+else {
+  if ($_POST["show_hidden"] === "show") {
+    $show_hidden = "hide";
+  }
+  else {
+    $show_hidden = "show";
+  }
+}
 
 chdir($cwd);
 
@@ -107,14 +112,13 @@ $is_home = false; /* la variable indique si on est arrivé à "home" ou pas*/
 echo "<form id='changecwd' method='POST'></form>";
 echo "<form id='sort' method='POST'>";
   echo "<input type='hidden' name='cwd' value='$cwd'>";
-  if ($sort_by === $_POST['last_sort']) {
-    echo "<input type='hidden' name='sort_order' value='$sort_order'>";
-  }
-  else {
-    echo "<input type='hidden' name='sort_order' value='" . $_POST['sort_order'] . "'>";
-  }
-  echo "<input type='hidden' name='last_sort' value='$sort_by'>";
+  echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+echo "</form>";
 
+echo "<form id='sort' method='POST'>";
+  echo "<input type='hidden' name='cwd' value='$cwd'>";
+  echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+  echo "<input type='hidden' name='sort' value='$sort_by'>";
 echo "</form>";
 
 echo "<div class='container row'>";
@@ -132,8 +136,17 @@ foreach ($breadcrumb as $name) {
   }
 }
 echo "</div>";
-
 echo "<div class='container'>";
+  echo "<div class='breadcrumb'>";
+    echo "<button type='submit' form='sort' name='show_hidden' value='$show_hidden'>";
+    if ($show_hidden === 'show') {
+      echo "Show";
+    }
+    else {
+      echo "Hide";
+    }
+    echo "</button>";
+  echo "</div>";
   echo "<div class='breadcrumb'>";
     echo "<div class='w-25'>";
       echo "<button type='submit' form='sort' name='sort' value='name'>";
@@ -157,22 +170,24 @@ echo "<div class='container'>";
     echo "</div>";
   echo "</div>";
 foreach ($sorted_contents as $name => $value) {
-  echo "<div class='breadcrumb'>";
-    echo "<div class='w-25'>";
-        echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
-        echo $name;
-        echo "</button>";
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo date("d-m-Y à H:i:s", $contents_date[$name]);
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo $contents_size[$name];
-      echo "</div>";
-    echo "<div class='w-25'>";
-        echo $contents_type[$name];
-      echo "</div>";
-  echo "</div>";
+  if (!($name[0] === "." && $show_hidden === 'show')) {
+    echo "<div class='breadcrumb'>";
+      echo "<div class='w-25'>";
+          echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+          echo $name;
+          echo "</button>";
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo date("d-m-Y à H:i:s", $contents_date[$name]);
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_size[$name];
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_type[$name];
+        echo "</div>";
+    echo "</div>";
+  }
 }
 echo "</div>";
 
