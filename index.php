@@ -15,6 +15,7 @@ else {
   $cwd = $_POST["cwd"];
 }
 
+
 if (!isset($_POST["sort"])) {
   $sort_by = "name";
 }
@@ -22,6 +23,7 @@ else {
   $sort_by = $_POST["sort"];
 }
 echo $sort_by;
+
 
 if (!isset($_POST["sort_order"])) {
   $sort_order = "up";
@@ -34,7 +36,6 @@ else {
     $sort_order = "up";
   }
 }
-
 
 
 chdir($cwd);
@@ -71,19 +72,19 @@ foreach ($all_contents as $item) {
   }
 
 if ($sort_by === "date") {
-  $sorted_contents = &$contents_date;
+  $sorted_contents = $contents_date;
   asort($sorted_contents);
 }
 elseif ($sort_by === "size") {
-  $sorted_contents = &$contents_size;
+  $sorted_contents = $contents_size;
   asort($sorted_contents);
 }
 elseif ($sort_by === "type") {
-  $sorted_contents = &$contents_type;
+  $sorted_contents = $contents_type;
   natcasesort($sorted_contents);
 }
 else {
-  $sorted_contents = &$contents;
+  $sorted_contents = $contents;
   natcasesort($sorted_contents);
 }
 

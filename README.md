@@ -198,8 +198,8 @@ On utilise la fonction ```strpos()``` dans une condition, cette fonction vérifi
   ```
 
 S'il y a un ".", on déclare une variable ```$type``` qui contient le résultat de la fonction ```explode()``` à laquelle on passe en paramètre le caractère "." suivi de l'occurence de la variable de ```$item```.
-Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier éléments du tableau grace à la fonction ```end($type)``` qui nous donne l'extension du fichier.
-'il n'y a pas de ".", l'extension étant non définie, on indique "undefined".
+Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier élément du tableau grace à la fonction ```end($type)``` qui nous donne l'extension du fichier.
+S'il n'y a pas de ".", l'extension étant non définie, on indique "undefined" :
 
   ```
   else {
@@ -209,6 +209,113 @@ Enfin, dans la variable ```$contents_type[$item]```, on récupére le dernier é
 
 
 ## 7 - Pour chaque élément, afficher et trier par nom / taille / type / date de création :
+
+On créé une barre de catégorie que l'on place au-dessus du contenu de notre explorateur et qui va contenir les nom, date, taille et type de chaque dossier ou fichier :
+
+  ```
+  echo "<div class='breadcrumb'>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='sort' name='sort' value='name'>";
+      echo "Name";
+      echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='sort' name='sort' value='date'>";
+      echo "Date";
+      echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='sort' name='sort' value='size'>";
+      echo "Size";
+      echo "</button>";
+    echo "</div>";
+    echo "<div class='w-25'>";
+      echo "<button type='submit' form='sort' name='sort' value='type'>";
+      echo "Type";
+      echo "</button>";
+    echo "</div>";
+  echo "</div>";
+
+  ```
+Précision : les ```class``` Bootstrap (breadcrumb et w-25) ne servent que pour la présentation esthétique.
+
+Les boutons correspondent chacun à une catégorie et pointent vers un nouveau formulaire grace à ```form='sort'``` :
+
+  ```
+  echo "<form id='sort' method='POST'></form>";
+
+  ```
+
+Maintenant, lorsqu'on clique sur un bouton, la ```value``` de celui-ci est stoquée dans  ```$_POST["sort"]```.
+
+La variable super-globale ```$_POST["sort"]``` est réinitialisée à chaque rafraichissement de la page.
+On a besoin de garder la valeur de "cwd" (répertoire dans lequel on se trouve) donc on ajoute à notre formulaire :
+
+  ```
+  echo "<input type='hidden' name='cwd' value='$cwd'>";
+
+  ```
+
+Par défaut, on souhaite un tri par ordre alphabétique.
+Donc, on teste si un tri est déjà existant à l'aide de :
+
+  ```
+  if (!isset($_POST["sort"])) {
+    $sort_by = "name";
+  }
+
+  ```
+
+Si le tri n'existe pas alors on déclare la variable ```$sort_by``` en lui assignant la valeur "name" par défaut.
+
+On va créer un nouveau tableau ```$sorted_contents```, que l'on place dans des conditions, on vérifie sui la variable ```$sort_by``` contient les paramètres "date", "size" ou "type", et en fonction, on affecte des variables idoines ```$contents_date, $contents_size et $contents_type```.
+Puis, on tri les contenus de ce tableau par ordre numérique ou alphanumérique :
+
+  ```
+  if ($sort_by === "date") {
+    $sorted_contents = $contents_date;
+    asort($sorted_contents);
+  }
+  elseif ($sort_by === "size") {
+    $sorted_contents = $contents_size;
+    asort($sorted_contents);
+  }
+  elseif ($sort_by === "type") {
+    $sorted_contents = $contents_type;
+    natcasesort($sorted_contents);
+  }
+  else {
+    $sorted_contents = $contents;
+    natcasesort($sorted_contents);
+  }
+
+  ```
+
+la fonction ```asort()``` tri un tableau et conserve l'association des index, la fonction ```natcasesort()``` traite les chaînes alphanumériques du tableau (array) comme un être humain tout en conservant la relation clé/valeur. C'est ce qui est appelé l'"ordre naturel".
+
+
+Si l'ordre de tri n'existe pas alors on déclare la variable ```$sort_order``` en lui assignant la valeur "down" par défaut.
+
+Par défaut, on souhaite un tri croissant donc, si la variable ```$_POST["sort_order"]``` n'existe pas, on assigne la valeur "up" à la variable ```$sort_order```.
+Si la variable ```$_POST["sort_order"]``` existe, on assigne l'inverse de sa valeur à la variable ```$sort_order``` (donc la valeur inverse sera soit "up" soit "down" selon la valeur de départ)
+
+Donc, on teste si un tri est déjà existant.
+
+  ```
+  if (!isset($_POST["sort_order"])) {
+    $sort_order = "up";
+  }
+  else {
+    if ($_POST["sort_order"] === "up") {
+      $sort_order = "down";
+    }
+    else {
+      $sort_order = "up";
+    }
+  }
+
+  ```
+
 
 
 
