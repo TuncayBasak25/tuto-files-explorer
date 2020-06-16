@@ -354,7 +354,7 @@ la fonction ```asort()``` tri un tableau et conserve l'association des index, la
 Si l'ordre de tri n'existe pas alors on déclare la variable ```$sort_order``` en lui assignant la valeur "down" par défaut.
 
 Par défaut, on souhaite un tri croissant donc, si la variable ```$_POST["sort_order"]``` n'existe pas, on assigne la valeur "up" à la variable ```$sort_order```.
-Si la variable ```$_POST["sort_order"]``` existe, on assigne l'inverse de sa valeur à la variable ```$sort_order``` (donc la valeur inverse sera soit "up" soit "down" selon la valeur de départ)
+Si la variable ```$_POST["sort_order"]``` existe, on assigne l'inverse de sa valeur à la variable ```$sort_order``` (donc la valeur inverse sera soit "up" soit "down" selon la valeur de départ).
 
 Donc, on teste si un tri est déjà existant.
 
@@ -395,7 +395,23 @@ echo "</form>";
 
 ## 8 - Option afficher/masquer les fichiers cachés :
 
-Par défaut
+Par défaut, on souhaite ne pas afficher les dossiers et fichiers cachés, si la variable ```$_POST["show_hidden"]``` n'existe pas, on assigne la valeur "show" à la variable ```$show_hidden```.
+Si la variable ```$_POST["show_hidden"]``` existe, on assigne l'inverse de sa valeur à la variable ```show_hidden``` (donc la valeur inverse sera soit "show" soit "hidden" selon la valeur de départ).
+
+  ```
+  if (!isset($_POST["show_hidden"])) {
+    $show_hidden = "show";
+  }
+  else {
+    if ($_POST["show_hidden"] === "show") {
+      $show_hidden = "hide";
+    }
+    else {
+      $show_hidden = "show";
+    }
+  }
+
+  ```
 
 ## 9 - Ouvrir des fichiers :    
 
