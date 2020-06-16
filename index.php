@@ -24,6 +24,12 @@ else {
 }
 
 
+if (!isset($_POST["last_sort"])) {
+  $_POST["last_sort"] = "name";
+}
+
+
+
 if (!isset($_POST["sort_order"])) {
   $sort_order = "up";
 }
@@ -35,7 +41,7 @@ else {
     $sort_order = "up";
   }
 }
-
+echo $sort_order;
 
 chdir($cwd);
 
@@ -88,17 +94,7 @@ else {
 }
 
 if ($sort_order === "down") {
-  $keys = [];
-  $values = [];
-  $reversed = [];
-  foreach ($sorted_contents as $key => $value) {
-    array_push($keys, $key);
-    array_push($values, $value);
-  }
-  for ($i=count($keys)-1; $i >= 0 ; $i--) {
-    $reversed [$keys[$i]] = $values[$i];
-  }
-  $sorted_contents = &$reversed;
+  $sorted_contents = array_reverse($sorted_contents);
 }
 
 
@@ -111,7 +107,14 @@ $is_home = false; /* la variable indique si on est arrivé à "home" ou pas*/
 echo "<form id='changecwd' method='POST'></form>";
 echo "<form id='sort' method='POST'>";
   echo "<input type='hidden' name='cwd' value='$cwd'>";
-  echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+  if ($sort_by === $_POST['last_sort']) {
+    echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+  }
+  else {
+    echo "<input type='hidden' name='sort_order' value='" . $_POST['sort_order'] . "'>";
+  }
+  echo "<input type='hidden' name='last_sort' value='$sort_by'>";
+
 echo "</form>";
 
 echo "<div class='container row'>";

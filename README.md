@@ -326,7 +326,7 @@ Ce tableau vient remplacer le tableau ```$contents``` dans le ```forceach()``` d
   }
   ```
 
-Puis, on tri les contenus de ce tableau par ordre numérique ou alphanumérique :
+Puis, on trie les contenus de ce tableau par ordre numérique ou alphanumérique :
 
   ```
   if ($sort_by === "date") {
@@ -372,11 +372,15 @@ Donc, on teste si un tri est déjà existant.
   }
   ```
 
-Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut ('down'), alors on inverse le tableau.
+Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut ('up'), alors on inverse le tableau.
+Pour cela on utilise la fonction ```array_reverse()``` :
 
+```
+if ($sort_order === "down") {
+  $sorted_contents = array_reverse($sorted_contents);
+}
 
-
-
+```
 
 
 ## 8 - Option afficher/masquer les fichiers cachés :
