@@ -302,6 +302,30 @@ Par défaut, on souhaite un tri par ordre alphabétique donc, on place une véri
 Si le tri n'existe pas alors on déclare la variable ```$sort_by``` en lui assignant la valeur "name" par défaut.
 
 On va créer un nouveau tableau ```$sorted_contents```, que l'on place dans des conditions, on vérifie si la variable ```$sort_by``` contient les paramètres "date", "size" ou "type", et, en fonction, on affecte des variables idoines ```$contents_date, $contents_size et $contents_type```.
+
+Ce tableau vient remplacer le tableau ```$contents``` dans le ```forceach()``` d'affichage du contenu.
+
+  ```
+  foreach ($sorted_contents as $name => $value) { // ici, $contents est remplacé par $sorted_contents
+    echo "<div class='breadcrumb'>";
+      echo "<div class='w-25'>";
+          echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+          echo $name;
+          echo "</button>";
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo date("d-m-Y à H:i:s", $contents_date[$name]);
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_size[$name];
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_type[$name];
+        echo "</div>";
+    echo "</div>";
+  }
+  ```
+
 Puis, on tri les contenus de ce tableau par ordre numérique ou alphanumérique :
 
   ```
@@ -349,7 +373,9 @@ Donc, on teste si un tri est déjà existant.
   ```
 
 Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut ('down'), alors on inverse le tableau.
-Puis, on veux inverser les clés du tableau (et on les valeurs) ce qui fait que chaque élément va conserver ses propores valeurs (date, size et type).
+
+
+
 
 
 
