@@ -135,9 +135,17 @@ Dans le 1er chargement de la page, la variable ```$_POST($cwd)``` n'existe pas. 
 
 En reprenant le code de l'affichage du fil d'ariane et en l'adaptant, on obtient l'affichage du contenu :
 
-  ```
-  echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
-  ```
+```
+$contents = [];
+
+foreach ($all_contents as $item) {
+  if ($item !== "." && $item !== "..") {
+  echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $item . "'>";
+  echo $item;
+  echo "</button>";
+  }
+}
+```
 
 Ceci permet d'obtenir le chemin des répertoires dans le dossier actuel.
 
