@@ -22,7 +22,6 @@ if (!isset($_POST["sort"])) {
 else {
   $sort_by = $_POST["sort"];
 }
-echo $sort_by;
 
 
 if (!isset($_POST["sort_order"])) {

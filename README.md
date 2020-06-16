@@ -294,12 +294,14 @@ Par défaut, on souhaite un tri par ordre alphabétique donc, on place une véri
   if (!isset($_POST["sort"])) {
     $sort_by = "name";
   }
-
+  else {
+    $sort_by = $_POST["sort"];
+  }
   ```
 
 Si le tri n'existe pas alors on déclare la variable ```$sort_by``` en lui assignant la valeur "name" par défaut.
 
-On va créer un nouveau tableau ```$sorted_contents```, que l'on place dans des conditions, on vérifie sui la variable ```$sort_by``` contient les paramètres "date", "size" ou "type", et en fonction, on affecte des variables idoines ```$contents_date, $contents_size et $contents_type```.
+On va créer un nouveau tableau ```$sorted_contents```, que l'on place dans des conditions, on vérifie si la variable ```$sort_by``` contient les paramètres "date", "size" ou "type", et, en fonction, on affecte des variables idoines ```$contents_date, $contents_size et $contents_type```.
 Puis, on tri les contenus de ce tableau par ordre numérique ou alphanumérique :
 
   ```
@@ -344,10 +346,10 @@ Donc, on teste si un tri est déjà existant.
       $sort_order = "up";
     }
   }
-
   ```
 
-Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut (xxxxxxxxxxxxxxxxx), alors on inverse la tableau.
+Si l'ordre de tri ```$sort_order``` est différent de la valeur par défaut ('down'), alors on inverse le tableau.
+Puis, on veux inverser les clés du tableau (et on les valeurs) ce qui fait que chaque élément va conserver ses propores valeurs (date, size et type).
 
 
 
