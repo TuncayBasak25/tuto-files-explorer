@@ -396,7 +396,7 @@ echo "</form>";
 ## 8 - Option afficher/masquer les fichiers cachés :
 
 Par défaut, on souhaite ne pas afficher les dossiers et fichiers cachés, si la variable ```$_POST["show_hidden"]``` n'existe pas, on assigne la valeur "show" à la variable ```$show_hidden```.
-Si la variable ```$_POST["show_hidden"]``` existe, on assigne l'inverse de sa valeur à la variable ```show_hidden``` (donc la valeur inverse sera soit "show" soit "hidden" selon la valeur de départ).
+Si la variable ```$_POST["show_hidden"]``` existe, on assigne l'inverse de sa valeur à la variable ```show_hidden``` (donc la valeur inverse sera soit "show" soit "hide" selon la valeur de départ).
 
   ```
   if (!isset($_POST["show_hidden"])) {
@@ -412,6 +412,55 @@ Si la variable ```$_POST["show_hidden"]``` existe, on assigne l'inverse de sa va
   }
 
   ```
+
+On crée un nouveau formulaire que l'on place a la suite des précédents pour y lier notre futur bouton d'affichage des fichiers cachés. On lui attribue une ```id='how_hidden'```:
+
+  ```
+  echo "<form id='show_hidden' method='POST'>";
+    echo "<input type='hidden' name='cwd' value='$cwd'>";
+    echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+  echo "</form>";
+
+  ```
+
+Au desssus de notre barre de catégories on ajoute le bouton qui va pointer vers ce formulaire à l'aide de ```form='show_hidden'```. Lorsque les fichiers sont cachés le bouton affiche l'intitulé 'Show' et quand ce n'est pas le cas il affiche 'Hide' grace à la condition suivante :
+
+```
+echo "<button type='submit' form='show_hidden' name='show_hidden' value='$show_hidden'>";
+if ($show_hidden === 'show') {
+  echo "Show";
+}
+else {
+  echo "Hide";
+}
+echo "</button>";
+
+```
+
+Pour gérer l'affichage ou non des fichiers cachés on ajoute une condition à l'intérieur de notre ```foreach()```, qui recouvre tout son contenu. Dans cette condition on vérifie la présence d'un point au début du nom du contenu avec ```$name[0] === "."``` et l'état de notre variable avec ```$show_hidden === 'show'``` :
+
+```
+foreach ($sorted_contents as $name => $value) {
+  if (!($name[0] === "." && $show_hidden === 'show')) {
+    echo "<div class='breadcrumb'>";
+      echo "<div class='w-25'>";
+          echo "<button type='submit' form='changecwd' name='cwd' value='" . $cwd . DIRECTORY_SEPARATOR . $name . "'>";
+          echo $name;
+          echo "</button>";
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo date("d-m-Y à H:i:s", $contents_date[$name]);
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_size[$name];
+        echo "</div>";
+      echo "<div class='w-25'>";
+          echo $contents_type[$name];
+        echo "</div>";
+    echo "</div>";
+  }
+}
+```
 
 ## 9 - Ouvrir des fichiers :    
 

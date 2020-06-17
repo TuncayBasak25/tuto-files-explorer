@@ -121,6 +121,11 @@ echo "<form id='sort' method='POST'>";
   echo "<input type='hidden' name='sort' value='$sort_by'>";
 echo "</form>";
 
+echo "<form id='show_hidden' method='POST'>";
+  echo "<input type='hidden' name='cwd' value='$cwd'>";
+  echo "<input type='hidden' name='sort_order' value='$sort_order'>";
+echo "</form>";
+
 echo "<div class='container row'>";
 foreach ($breadcrumb as $name) {
   $cwd_road .= $name . DIRECTORY_SEPARATOR; // ou $cwd_road = $cwd_road.$name . DIRECTORY_SEPARATOR; car .= est un opérateur concaténant
@@ -138,7 +143,7 @@ foreach ($breadcrumb as $name) {
 echo "</div>";
 echo "<div class='container'>";
   echo "<div class='breadcrumb'>";
-    echo "<button type='submit' form='sort' name='show_hidden' value='$show_hidden'>";
+    echo "<button type='submit' form='show_hidden' name='show_hidden' value='$show_hidden'>";
     if ($show_hidden === 'show') {
       echo "Show";
     }
